@@ -5,6 +5,7 @@ import numpy
 
 NULL_REPRESENTATION = ''
 
+
 def read_and_fix_excel(filename):
     """
     Fix excel spreadsheet so that
@@ -47,15 +48,15 @@ def clean_rate_data(rate):
     """
     if isinstance(rate, float):
         return rate # values that are already floating-point numbers should be passed through
-    if "+" in rate.strip(): # strip with no argument strips spaces
-        return float(rate.strip().strip("+")) # float fuction returns a floating point number
-    elif "-" in rate:
-        numpy.mean([int(x.strip()) for x in rate.split("-")])
-    else: # if bad data, return nan ("not a number")
-        try:
+    try:
+        if "+" in rate.strip(): # strip with no argument strips spaces
+            return float(rate.strip().strip("+")) # float fuction returns a floating point number
+        elif "-" in rate:
+            numpy.mean([int(x.strip()) for x in rate.split("-")])
+        else:
             return float(rate)
-        except:
-            return numpy.nan
+    except: # if bad data, return nan ("not a number")
+        return numpy.nan
 
 
 if __name__ == '__main__': 
